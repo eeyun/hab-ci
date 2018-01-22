@@ -17,7 +17,7 @@ echo docker-machine create -d amazonec2 ${MACHINE_NAME}
 echo with env vars:
 env | grep AWS | grep -v SECRET | sort
 
-docker-machine create -d amazonec2 ${MACHINE_NAME}
+docker-machine create -d amazonec2 ${MACHINE_NAME} --amazonec2-ami ami-67973709
 
 echo "Exporting connection info to ${MACHINE_NAME}"
 machine-export ${MACHINE_NAME}
