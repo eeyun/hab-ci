@@ -1,6 +1,6 @@
 FROM alpine:3.6
 MAINTAINER The Habitat Maintainers <humans@habitat.sh>
-ARG HAB_VERSION=
+#ARG HAB_VERSION=
 RUN set -ex \
   && apk add --no-cache --virtual .build-deps \
     ca-certificates \
@@ -10,7 +10,7 @@ RUN set -ex \
   \
   && cd /tmp \
   && wget https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh \
-  && sh install.sh -v ${HAB_VERSION:-} \
+  && sh install.sh \
   && rm -rf install.sh /hab/cache \
   && apk del .build-deps \
   \
