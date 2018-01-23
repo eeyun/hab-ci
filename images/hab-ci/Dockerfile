@@ -19,8 +19,8 @@ RUN set -ex \
   && echo "hab:x:42:42:root:/:/bin/sh" >> /etc/passwd \
   && echo "hab:x:42:hab" >> /etc/group
 
-RUN hab pkg install core/hab-launcher core/hab-sup core/cacerts core/bash
-RUN hab pkg install --binlink core/bash bash
+RUN hab pkg install core/hab-launcher core/hab-sup core/cacerts
+RUN hab pkg install --binlink core/bash
 
 WORKDIR /src
 VOLUME ["/src"]
