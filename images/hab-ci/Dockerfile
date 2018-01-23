@@ -19,7 +19,7 @@ RUN set -ex \
   && echo "hab:x:42:42:root:/:/bin/sh" >> /etc/passwd \
   && echo "hab:x:42:hab" >> /etc/group
 
-RUN hab pkg install core/hab-launcher core/hab-sup core/busybox core/cacerts
+RUN hab pkg install --binlink --force core/hab-launcher core/hab-sup core/busybox core/cacerts 
 
 WORKDIR /src
 VOLUME ["/src"]
