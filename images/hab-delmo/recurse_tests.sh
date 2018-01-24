@@ -25,6 +25,9 @@ if [ ! -z ${MACHINE_NAME} ] && [ ! -z ${MACHINE_EXPORT_AWS_ACCESS_KEY_ID} ] \
     echo "Pruning unused volumes..."
     docker volume prune -f
 
+    echo "Moving on to tests..."
+    cat ./"${GROUP_CONTEXT}"/*
+
     if [ -d "./${GROUP_CONTEXT}" ]; then
       cd "${GROUP_CONTEXT}"
 
