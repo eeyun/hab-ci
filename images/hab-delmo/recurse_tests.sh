@@ -25,6 +25,27 @@ if [ ! -z ${MACHINE_NAME} ] && [ ! -z ${MACHINE_EXPORT_AWS_ACCESS_KEY_ID} ] \
     echo "Pruning unused volumes..."
     docker volume prune -f
 
+    if [ -d "./${GROUP_CONTEXT}" ]; then
+      cd "${GROUP_CONTEXT}"
+
+      build_idents=(`cat ./* | jq '[.group[]| .ident]'| tr -d '[]()""' | tr ',' '\n'| awk NF`)
+
+      for pkg_ident in "${build_idents[@]}"; do
+        pkg_path="/hab/pkgs/${pkg_ident}"
+
+        hab pkg install "${pkg_ident}"
+
+        if [ -f "$pkg_path/tests/delmo.yml" ]; then
+          delmo --only-build-task -f "$pkg_path/tests/delmo.yml" -m ${MACHINE_NAME}
+        else
+          echo "No tests in pkg: $ident"
+        fi
+      done
+    else
+     echo "Could not find ${GROUP_CONTEXT}"
+     exit 1
+    fi
+
 fi
 
 if [ -d "./${GROUP_CONTEXT}" ]; then
