@@ -30,9 +30,8 @@ echo "Moving on to Tests."
 echo ""
 echo "Running Tests for ${PKG_CONTEXT} first..."
 echo ""
-delmo --only-build-task -f "${PKG_CONTEXT}-tests/${PKG_CONTEXT}/tests/delmo.yml" -m "${MACHINE_NAME}"
-echo ""
-echo "Running Tests for build group..."
+exec delmo --only-build-task -f "${PKG_CONTEXT}-tests/${PKG_CONTEXT}/tests/delmo.yml" -m "${MACHINE_NAME}"
+
 if [ -d "./${GROUP_CONTEXT}" ]; then
     cd "${GROUP_CONTEXT}"
     build_idents=(`cat ./* | jq '[.group[]| .ident]'| tr -d '[]()""' | tr ',' '\n'| awk NF`)
@@ -40,7 +39,7 @@ if [ -d "./${GROUP_CONTEXT}" ]; then
         pkg_path="/hab/pkgs/${pkg_ident}"
         hab pkg install "${pkg_ident}"
         if [ -f "$pkg_path/tests/delmo.yml" ]; then
-            delmo --only-build-task -f "$pkg_path/tests/delmo.yml" -m ${MACHINE_NAME}
+           exec delmo --only-build-task -f "$pkg_path/tests/delmo.yml" -m ${MACHINE_NAME}
         else
             echo "No tests in pkg: $ident"
         fi
