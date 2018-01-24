@@ -43,6 +43,12 @@ if [ ! -z ${MACHINE_NAME} ] && [ ! -z ${MACHINE_EXPORT_AWS_ACCESS_KEY_ID} ] \
 
 fi
 
+ls -la
+echo ""
+echo "one step up"
+echo ""
+ls -la ..
+
 cd $GROUP_CONTEXT
 
 build_idents=(`cat ./* | jq '[.group[]| .ident]'| tr -d '[]()""' | tr ',' '\n'| awk NF`)
