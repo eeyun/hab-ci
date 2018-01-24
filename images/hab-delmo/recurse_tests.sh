@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -z ${MACHINE_NAME} ] && [ ! -z ${MACHINE_EXPORT_AWS_ACCESS_KEY_ID} ] \
     && [ ! -z ${MACHINE_EXPORT_AWS_SECRET_ACCESS_KEY} ] &&  [ ! -z ${MACHINE_EXPORT_AWS_REGION} ] \
@@ -28,12 +28,12 @@ fi
 
 cd $GROUP_CONTEXT
 
-build_idents=$(cat ./* | jq '[.group[]| .ident]'| tr -d '[]()""' | tr ',' '\n')
+build_idents=(`cat ./* | jq '[.group[]| .ident]'| tr -d '[]()""' | tr ',' '\n'| awk NF`)
 
-for ident in ${build_idents[@]}; do
-  pkg_path="/hab/pkgs/$ident"
+for pkg_ident in "${build_idents[@]}"; do
+  pkg_path="/hab/pkgs/${pkg_ident}"
 
-  hab pkg install $ident
+  hab pkg install "${pkg_ident}"
 
   if [ -f "$pkg_path/tests/delmo.yml" ]; then
       delmo --only-build-task -f "$pkg_path/tests/delmo.yml" -m ${MACHINE_NAME}
