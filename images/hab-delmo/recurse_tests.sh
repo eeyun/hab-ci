@@ -25,9 +25,13 @@ if [ ! -z ${MACHINE_NAME} ] && [ ! -z ${MACHINE_EXPORT_AWS_ACCESS_KEY_ID} ] \
     echo "Pruning unused volumes..."
     docker volume prune -f
 
-    echo "Moving on to tests..."
-    cat ./"${GROUP_CONTEXT}"/*
-
+    echo "Moving on to Tests."
+    echo ""
+    echo "Running Tests for ${PKG_CONTEXT} first..."
+    echo ""
+    delmo --only-build-task -f "${PKG_CONTEXT}-tests/${PKG_CONTEXT}/tests/delmo.yml" -m "${MACHINE_NAME}"
+    echo ""
+    echo "Running Tests for build group..."
     if [ -d "./${GROUP_CONTEXT}" ]; then
       cd "${GROUP_CONTEXT}"
 
