@@ -29,6 +29,6 @@ RUN curl -L https://github.com/docker/machine/releases/download/v${DOCKER_MACHNE
 RUN curl -L https://github.com/bodymindarts/delmo/releases/download/v${DELMO_VERSION}/delmo-linux-amd64 > /usr/local/bin/delmo \
       && chmod +x /usr/local/bin/delmo
 
-ADD entrypoint.sh /
-ENTRYPOINT ["/recurse_tests.sh"]
-CMD ["delmo", "-v"]
+ADD ./recurse_tests.sh /recurse_tests.sh
+
+CMD /recurse_tests.sh
