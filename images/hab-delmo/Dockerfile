@@ -4,7 +4,7 @@ ENV DOCKER_MACHNE_VERSION=0.8.2 \
   DELMO_VERSION=0.6.1 \
   DOCKER_VERSION=1.13.0
 
-RUN apk add --update curl nodejs py-pip \
+RUN apk add --update curl nodejs py-pip jq\
     && pip install --upgrade pip \
     && rm -rf /var/cache/apk/*
 
@@ -30,5 +30,5 @@ RUN curl -L https://github.com/bodymindarts/delmo/releases/download/v${DELMO_VER
       && chmod +x /usr/local/bin/delmo
 
 ADD entrypoint.sh /
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/recurse_tests.sh"]
 CMD ["delmo", "-v"]
