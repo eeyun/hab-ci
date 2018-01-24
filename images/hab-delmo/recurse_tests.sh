@@ -25,7 +25,7 @@ fi
 
 cd $GROUP_CONTEXT
 
-build_idents=$(cat ./* jq '[.group[]| .ident]'| tr -d '[]()""' | tr ',' '\n')
+build_idents=$(cat ./* | jq '[.group[]| .ident]'| tr -d '[]()""' | tr ',' '\n')
 
 for ident in ${build_idents[@]}; do
   pkg_path="/hab/pkgs/$ident"
