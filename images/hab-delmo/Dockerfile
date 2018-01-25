@@ -30,5 +30,5 @@ RUN curl -L https://github.com/bodymindarts/delmo/releases/download/v${DELMO_VER
       && chmod +x /usr/local/bin/delmo
 
 ADD entrypoint.sh /
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["delmo", "-v"]
+
+CMD /entrypoint.sh
