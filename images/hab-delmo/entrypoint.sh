@@ -26,5 +26,37 @@ if [ ! -z ${MACHINE_NAME} ] && [ ! -z ${MACHINE_EXPORT_AWS_ACCESS_KEY_ID} ] \
     docker volume prune -f
 fi
 
-echo "Running '$@'"
-exec $@
+if [ -f "${PKG_CONTEXT}-tests/${PKG_CONTEXT}/tests/delmo.yml" ]; then
+
+    if delmo --only-build-task, -f "${PKG_CONTEXT}-tests/${package_name}/tests/delmo.yml" -m "${MACHINE_NAME}"; then
+
+        if [ -d "./${GROUP_CONTEXT}" ]; then
+            cd "${GROUP_CONTEXT}"
+            build_group=$(ls)
+            cat > notify_message/message <<EOF
+        Testing of '${PKG_CONTEXT}' succeeded for build group: ${build_group}
+EOF
+            exit 0
+        fi
+    else
+        if [ -d "./${GROUP_CONTEXT}" ]; then
+            cd "${GROUP_CONTEXT}"
+            build_group=$(ls)
+            cat > notify_message/message <<EOF
+        Testing of '${PKG_CONTEXT}' failed for build group: ${build_group}
+EOF
+            exit 1
+        fi
+    fi
+else
+    warning="WARN: No tests found for ${PKG_CONTEXT}!!"
+    echo "${warning}"
+    cat > ${GROUP_CONTEXT}/notify_message/message <<EOF
+Testing of '${PKG_CONTEXT}' completed but produced a warning.
+
+  "${warning}""
+
+EOF
+fi
+
+
