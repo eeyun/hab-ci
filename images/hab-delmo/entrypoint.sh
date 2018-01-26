@@ -28,7 +28,6 @@ fi
 
 if [ -d "./${GROUP_CONTEXT}" ]; then
     build_group=$(ls ${GROUP_CONTEXT})
-    export HAB_BLDR_CHANNEL="${build_group}"
 
     if [ -f "${PKG_CONTEXT}-tests/${PKG_CONTEXT}/tests/delmo.yml" ]; then
 
