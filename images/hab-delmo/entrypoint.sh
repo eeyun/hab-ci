@@ -33,20 +33,20 @@ if [ -d "./${GROUP_CONTEXT}" ]; then
 
         if delmo --only-build-task -f "${PKG_CONTEXT}-tests/${PKG_CONTEXT}/tests/delmo.yml" -m "${MACHINE_NAME}"; then
             cat > notify_message/message <<EOF
-    Testing of pkg: *'${PKG_CONTEXT}'* succeeded for build group: *'${build_group}'*
+    :metal: Testing of pkg: *'${PKG_CONTEXT}'* succeeded for build group: *'${build_group}'*
 EOF
             exit 0
         else
             cat > notify_message/message <<EOF
-    Testing of pkg: *'${PKG_CONTEXT}'* failed for build group: *'${build_group}'*
+    :flames: Testing of pkg: *'${PKG_CONTEXT}'* failed for build group: *'${build_group}'*
 EOF
             exit 1
         fi
     else
         warning="WARN: No tests found for ${PKG_CONTEXT}!!"
         echo "${warning}"
-        cat > ${GROUP_CONTEXT}/notify_message/message <<EOF
-    Testing of *'${PKG_CONTEXT}'* completed for build_group: *'${build_group}'* but produced a warning
+        cat > notify_message/message <<EOF
+    :warning: Testing of *'${PKG_CONTEXT}'* completed for build_group: *'${build_group}'* but produced a warning
 
     "${warning}""
 
