@@ -33,7 +33,7 @@ if [ -d "./${GROUP_CONTEXT}" ]; then
 
         if delmo --only-build-task -f "${PKG_CONTEXT}-tests/${PKG_CONTEXT}/tests/delmo.yml" -m "${MACHINE_NAME}"; then
             cat > notify_message/message <<EOF
-    :metal: Testing of pkg: *'${PKG_CONTEXT}'* succeeded for build group: *'${build_group}'*
+    :party_habitat: Testing of pkg: *'${PKG_CONTEXT}'* succeeded for build group: *'${build_group}'*
 EOF
             exit 0
         else
